@@ -1,0 +1,40 @@
+Stuktura u kojoj se cuva sam potez je zamisljena kao lista podlisti, gde su podliste u stvari vrste matrice.
+U svakoj vrsti cuva se niz elementa od kojih su moguci:
+	'-'  -prazno polje
+	'O'  -igrac O
+	'X'  -igrac X
+Trenutno stanje ove liste cuva se u pomocnoj promenljivoj _matrix	
+	
+Ostale promenljive koje cuvaju stanje igre su:
+	_o 			-preostali broj figura O igraca
+    	_x 			-preostali broj figura X igraca
+	_covek 			-promenljiva koja ukazuje da li je korisnik X ili O
+	_na_potezu 		-igrac koji je na potezu (moguce vrednosti X i O)
+	_kraj  			-indikator kraja igre
+	_n  			-velicina table
+
+Ostale promenljive koje se koriste u glavnom programu(testiranje faze) su:
+	_potez 			-pamti uneti potez sa tastature
+	_validnost_poteza 	-pamti t/'() vrednost validacije odigranog poteza
+
+U fajlu "generisanje_pocetne_matrice" date su funckije cija je svrha kreiranje inicijalne matricne strukture,
+gde su po dva krajnja reda ispunjena 'X' i 'O' znacima, a srednji deo, tj. prazna polja znakom '-'.
+
+U fajlu "stampanje" se nalaze funkcije koje imaju za cilj predstavljanje stanja igre korisniku. U zavisnosti od toga da li je _covek promenljiva 'x ili 'o ove funkcije omogucavaju dva nacina stampanja table. Pored samog stanja stampaju se i pomocni brojevi po horizontali i vertikali koji omogucavaju laksi i intuitivniji pregled figura koje se nalaze na tabli. Ovi pomocni brojevi omogucavaju indeksiranje matrice korisniku i olaksavaju igranje poteza koriscenjem istih.
+
+U fajlu "transformacije_matrice" date su funkcije koje vrse odredjenu transformaciju matrice radi lakse provere nekog segmenta igre. Konkretno olaksavaju proveru validacije i kraja igre. Omoguceno je transponovanje matrice i postavljanje elemenata dijagonala(glavnih -main; sporednih -side) na poziciju kolona matrice. Kao pomoc postavljanju elemenata dijagonala se koriste funkcije shiftLeft i shiftRight koje u odgovarajucoj vrsti matrice vrse pomeranje elemenata u odgovarajucem smeru. Funkcije vracaju odgovarajucu matricu nakon izvrsenja transformacije.
+
+U fajlu "validacija" date su funkcije koje ispituju validnost odigranog poteza. Kratak osvrt na funkciju "validacijaFiguraIzmedju" - Funkcija koristi transponovanje matrice da izvrsi validaciju samo po horizontali. Same provere ostalih funkcija objasnjene su kroz komentare f-ja.
+
+U fajlu "potez" date su f-je koje na osnovu unetih koordinata pocetne i krajnje pozicije figure odigravaju potez, odnosno generisu novo
+stanje matrice u slucaju da zadati potez zadovoljava sve uslove validnosti.
+
+U fajlu "sendvic" se nalaze funkcije koje omogucavaju izbacivanje sendvica koji je napravljen u prethodno povucenom potezu. Realizovane su za obe strane koje su na potezu- i za x i za o. Pridrzavajuci se pravila nasi sendvici koje je napravio protivnik se ne brisu. Zbog toga se glavnoj funkciji(ako je na potezu x-"eliminisiSendviceIzMatriceX", a ako je na potezu o-"eliminisiSendviceIzMatriceO") za brisanje sendvica prosledjuju kordinate naseg odigranog poteza. Ova f-ja zove brisanje sendvica i iz redova i iz kolona(opet se koristi transponovanje matrice stanja), tako da se citav problem svodi na eliminaciju sendvica iz reda. Pre nego sto se pozove f-ja koja vrsi eliminaciju sendvica iz reda, na osnovu parametara poteza se utvrdjuje da li je potezom napravljen sendvic. Sama eliminacija se ponavlja sve dok postoje sendvici u redu u kojem se smestena nasa figura(dok f-ja provere vraca vrednost vecu od -1). Izbacivanjem sendvica se upisuju neutralni elementi za igru na to mesto "-".
+
+Ideja sa ispitivanjem pobede po dijagonali je da se vrste shiftuju i da se dijagonalni niz prevede u vrstu te da se tako ispita niz od 5.
+U fajlu "transformacije_matrice" date su f-je koje vrse shiftanje kao i transponovanje, jer se kolone takodje ispravljaju u vrste pri
+ispitivanju niza od 5 istih figura.
+U fajlu "provera_kraja" date su funkcije koje proveravaju sve elemente koje mogu da dovedu do zavrsnice partije. Ove funkcije se takodje oslanjaju na fajl "transformacije_matrice" za proveru pobede. F-je su propracene komentarima.
+
+Fajl "main" daje kratku implemetaciju igre za dva igraca, gde se kroz ponudjen izbor i konzolni unos upravlja partijom.
+Ona je tu u svrhu testiranja kompletnog dela prve faze.
